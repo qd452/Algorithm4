@@ -1,20 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-Created on 4/5/2016 12:00 PM
+Created on 4/5/2016 3:18 PM
 
 Author: Qu Dong
 
-A generic stack, implemented using a singly-linked list.
-Each stack element is of type Item.
-
-This version uses a static nested class Node (to save 8 bytes per
-Node), whereas the version in the textbook uses a non-static nested
-class (for simplicity).
-
-This is just a Python version of Stack implemented by Robert Sedgewick and Kevin Wayne.
+This is just a Python version of Queue implemented by Robert Sedgewick and Kevin Wayne.
 """
-__version__ = "1.0"
 
 
 class NoSuchElementError(Exception):
@@ -25,10 +17,11 @@ class UnsupportedOperationError(Exception):
     pass
 
 
-class Stack():
+class Queue():
     def __init__(self):
-        self.first = None  # top of stack, a Node object
-        self.N = 0  # size of the stack
+        self.first = None  # beginning of queue
+        self.last = None  # end of queue
+        self.N = 0  # number of elements on queue
 
     class _Node():
         """ Helper linked list class
@@ -40,56 +33,60 @@ class Stack():
 
     def isEmpty(self):
         """
-        :return: true if this stack is empty
+        :return: true if this queue is empty
         """
         return self.first == None
 
     def size(self):
         """
-        :return: the number of items in this stack
+        :return: the number of items in this queue
         """
         return self.N
 
-    def push(self, item):
+    def enqueue(self, item):
         """
-        Adds the item ot this stack
+        Adds the item ot this queue
 
         :param item: the item to add
         """
-        oldfirst = self.first
-        self.first = self._Node(item, oldfirst)
+        oldlast = self.last
+        self.last = self._Node(item, None)
+        if self.isEmpty():
+            self.first = self.last
+        else:
+            oldlast._next = self.last
         self.N += 1
 
-    def pop(self):
+    def dequeue(self):
         """
-        Removes and returns the item most recently added to this stack.
+        Removes and returns the item on this queue that was least recently added.
 
-        :return: the item most recently added.
-        Raise NoSuchElementException if this stack is empty
+        :return: the item on this queue that was least recently added
+        Raise NoSuchElementException if this queue is empty
         """
         if self.isEmpty():
-            raise NoSuchElementError("Stack underflow")
+            raise NoSuchElementError("Queue underflow")
         current_item = self.first._item
         self.first = self.first._next
         self.N -= 1
+        if self.isEmpty():
+            self.last = None  # to avoid loitering
         return current_item  # NOTE: returned value here is the current item
 
     def peek(self):
         """
-        Returns (but does not remove) the item most recently added to this stack.
-
-        :return: the tiem most recently added to this stack.
-        Raise NoSuchElementException if this stack is empty
+        :return: the item least recently added to this queue.
+        Raise NoSuchElementException if this queue is empty
         """
         if self.isEmpty():
-            raise NoSuchElementError("Stack underflow")
+            raise NoSuchElementError("Queue underflow")
         return self.first._item
 
     def __str__(self):
         """
         Returns a string representation of this stack
 
-        :return: the sequence of items in this tack in LIFO order, separated by spaces.
+        :return: the sequence of items in this tack in FIFO order, separated by spaces.
         """
         s = ''
         for item in self:  # NOTE: if I implemented the __iter__() method, no error here;
@@ -99,7 +96,7 @@ class Stack():
 
     def __iter__(self):
         """
-        :return: Returns a iterator to this stack that iterates through the items in LIFO order.
+        :return: Returns a iterator to this queue that iterates through the items in FIFO order.
         """
         return self._ListIterator(self.first)
 
@@ -120,23 +117,23 @@ class Stack():
             if self.hasNext():
                 current_item = self.current._item
                 self.current = self.current._next
-                return current_item  # The same problem as the pop() method
+                return current_item  # The same problem as the dequeue() method
             else:
                 raise StopIteration
 
 
 if __name__ == "__main__":
-    s = Stack()
-    s.push(1)
+    s = Queue()
+    s.enqueue(1)
     print(s)
-    s.push('b')
+    s.enqueue('b')
     print(s)
-    s.push(3)
+    s.enqueue(3)
     print(s)
-    s.push('d')
+    s.enqueue('d')
     print(s)
-    print('Item poped ', s.pop())
-    print('Finally, {} items left on stack, which are: ({})'.format(s.size(), s))
+    print('Item dequeued ', s.dequeue())
+    print('Finally, {} items left on queue, which are: ({})'.format(s.size(), s))
     print('\n=======================Understanding of Iterator===============================')
     print('According to the https://docs.python.org/3/tutorial/classes.html#iterators')
     it = iter(s)  # equivalent to it = s.__iter__()
