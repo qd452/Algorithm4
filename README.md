@@ -4,16 +4,24 @@ Learning the [Princeton University Algorithms](http://algs4.cs.princeton.edu/hom
 
 It has two main parts:
 
+
 1. The programming assignments solutions of [Coursera Algorithms, Part I ](https://www.coursera.org/course/algs4partI), it is in Java
 2. The equivalent Python implementation of the Java algorithms implemented in [algs4](http://algs4.cs.princeton.edu/code/) package, and some other codes used in the lecture. 
 
 ## Table of Contents
 
-[TOC]
+* [Java assignments solutions](#java-assignments-solutions)
+* [Python implementations](#python-implementations)
+    * [Quick Starts](#quick-starts)
+    * [What's included](#whats-included)
+* [Documentations](#documentations)
+* [License](#license)
 
 ## Java assignments solutions
 
 My own solution of [Coursera Algorithms, Part I ](https://www.coursera.org/course/algs4partI) programming assignments.
+
+on-going...
 
 ## Python implementations
 
@@ -24,7 +32,7 @@ Please install/update/downgrade the required packages used in this project by ru
 And the recommended way to run TestToolBox is [WinPython](https://winpython.github.io/). Currently recommended Python version would be **3.3**.
 
 ### What's included
-Within the download you'll find the following directories and files
+Within the download you'll find the following directories and files. To get the tree structure, in window `CMD`, type `tree \f`.
 
 ```
 src/
@@ -36,6 +44,8 @@ src/
 ```
 
 ## Documentations
+
+building...
 
 ## License
 
