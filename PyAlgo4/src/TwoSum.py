@@ -115,5 +115,5 @@ if __name__ == "__main__":
     ax.set_xlabel('Data Size [K]')
     ax.set_ylabel('Time Elapsed [sec]')
     plt.tight_layout()
-    plt.savefig('TwoSum_Norma_Fast.png')
+    plt.savefig('TwoSum_Normal_Fast.png')
     plt.show()
