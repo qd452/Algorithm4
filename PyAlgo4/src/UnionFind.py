@@ -108,8 +108,8 @@ class WeightedQuickUnionUF():
 
 if __name__ == "__main__":
     # uf = WeightedQuickUnionUF(10)
-    uf = QuickUnionUF(10)
-    # uf = QuikFindUF(10)
+    # uf = QuickUnionUF(10)
+    uf = QuikFindUF(10)
     uf.union(6, 9)
     print(' '.join([str(i) for i in uf.parent]))
     uf.union(8, 2)

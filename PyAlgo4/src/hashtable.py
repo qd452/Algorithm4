@@ -121,7 +121,8 @@ class HastTable():
         return '{' + ', '.join(
             ['{}: {}'.format(self.key[i], self.value[i]) for i in range(self.tablesize)]) + '}'
 
-    def __str__(self):  # 感觉它更能重写repr
+    def __str__(self):  # 感觉它更能重写repr -> 其实并不是，只是只有在console里面直接表示ht的时候，__repr__()会被调用，
+        # 然而当print(), str(), format()的时候，都是__str__()被调用的
         # http://stackoverflow.com/questions/1436703/difference-between-str-and-repr-in-python
         return '{' + ', '.join(
             ['{}: {}'.format(self.key[i], self.value[i]) for i in range(self.tablesize) if self.key[i] != None]) + '}'
