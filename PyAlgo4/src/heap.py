@@ -4,6 +4,10 @@ Created on Thu Nov 17 22:50:00 2016
 
 @author: dong
 
+
+* complete binary tree
+* height of the tree: logn
+--------------------
 one thing about heap:
 
 1 2 3 4 5 6 7
@@ -29,6 +33,18 @@ Another way of seeing this, idx actually starts from 0
     /
    7
 heap[k] <= heap[k*2+1] and heap[k] <= heap[k*2+2]
+
+
+-----
+http://wcipeg.com/wiki/Binary_heap
+
+Time complexity of Binary Heap
+
+           Ave       Worst Case
+Insertion: O(1)        O(logn)
+Deletion: O(logn)      O(logn)
+heapify   O(n)
+
 """
 
 class HeapQ(object):
@@ -85,13 +101,43 @@ class HeapQ(object):
             i = mc
 #            print(i)
             
-    def heapfy(self, alist):
-        # todo: understand
-        # todo: timing complexity
-        pass
+    def heapify(self, alist):
+        """
+        todo: timing complexity -> O(n)
+        
+        -----
+        Another way:
+        another naive way would be insert the alist items one by one using
+        heap_push, since the heap push worst case is log(n), as insert n items 
+        would result O(nlogn). However, since average case for insertion is
+        O(1), results O(n) for heapify.
+        """
+        self.l=alist
+        
+        i = len(self.l) // 2 -1 # find the 2nd last level of the tree
+        # as the following nodes are all the child of this level
+        # therefore starting from this level, percolates down the i down until
+        # node 0
+        """
+                        0
+                    /       \
+                   1          2
+                  / \       /  \
+                 3   4     5    6
+                / \ / \   / \  / \
+               7  89  10 11 12 13 14
+              /
+             15
+        if len(self.l)==16, we should start from node 7 (len//2-1)
+        if len(self.l)==15, we should start from node 6 (len//2-1)
+        """
+        while i>=0:
+            self._per_down(i)
+            i-=1
+        return self.l
             
             
-import heapq       
+import heapq    #todo:read and understand   
         
 hq = HeapQ()
 l = [5, 9, 11, 14, 18, 19, 21, 33, 17, 27]
@@ -101,3 +147,6 @@ hq.heappush(7)
 print(hq.l)
 print('min is ', hq.heappop())
 print(hq.l)
+
+hq2 = HeapQ()
+print(hq2.heapify([9,6,5,2,3]))
