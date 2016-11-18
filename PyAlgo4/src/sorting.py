@@ -102,9 +102,10 @@ def short_bubble(l, debug=True):
     return l
 
 
+### Sheel sort
 def shellSort(alist):
     # give up, cannot understand
-    sublistcount = len(alist) // 2 # sublistcount is the gap
+    sublistcount = len(alist) // 2  # sublistcount is the gap
     while sublistcount > 0:
 
         for startposition in range(sublistcount):
@@ -119,7 +120,7 @@ def shellSort(alist):
 
 
 def gapInsertionSort(alist, start, gap):
-    print('sorting sublist: ', [alist[i] for i in range(start+gap, len(alist), gap)])
+    print('sorting sublist: ', [alist[i] for i in range(start + gap, len(alist), gap)])
     for i in range(start + gap, len(alist), gap):
 
         currentvalue = alist[i]
@@ -130,6 +131,123 @@ def gapInsertionSort(alist, start, gap):
             position = position - gap
 
         alist[position] = currentvalue
+
+
+####===================================
+# Merge Sort
+# implemented based on the predo code @
+#   https://www.tutorialspoint.com/data_structures_algorithms/merge_sort_algorithm.htm
+def mergeSort(alist):
+    print("Splitting ", alist)
+    n = len(alist)
+    if n == 1: return alist
+    mid = n // 2
+    LL = mergeSort(alist[:mid])
+    RL = mergeSort(alist[mid:])
+    return merge(LL, RL)
+
+
+def merge(LL, RL):
+    """
+    One truth about LL and RL: they are always sorted
+    """
+    c = []
+    while len(LL) != 0 and len(RL) != 0:
+        if LL[0] < RL[0]:
+            c.append(LL.pop(0))
+        else:
+            c.append(RL.pop(0))
+
+    while len(LL) != 0:
+        c.append(LL.pop(0))
+
+    while len(RL) != 0:
+        c.append(RL.pop(0))
+    print('Merging ', c)
+    return c
+
+
+# def mergeSort(alist):
+#     print("Splitting ",alist)
+#     if len(alist)>1:
+#         mid = len(alist)//2
+#         lefthalf = alist[:mid]
+#         righthalf = alist[mid:]
+#
+#         mergeSort(lefthalf)
+#         mergeSort(righthalf)
+#
+#         i=0
+#         j=0
+#         k=0
+#         while i < len(lefthalf) and j < len(righthalf):
+#             if lefthalf[i] < righthalf[j]:
+#                 alist[k]=lefthalf[i]
+#                 i=i+1
+#             else:
+#                 alist[k]=righthalf[j]
+#                 j=j+1
+#             k=k+1
+#
+#         while i < len(lefthalf):
+#             alist[k]=lefthalf[i]
+#             i=i+1
+#             k=k+1
+#
+#         while j < len(righthalf):
+#             alist[k]=righthalf[j]
+#             j=j+1
+#             k=k+1
+#     print("Merging ",alist)
+
+
+
+
+# Python program for implementation of Quicksort Sort
+# This function takes last element as pivot, places
+# the pivot element at its correct position in sorted
+# array, and places all smaller (smaller than pivot)
+# to left of pivot and all greater elements to right
+# of pivot
+def partition(arr, low, high):
+    print('===== Partition starts =====')
+    i = (low - 1)  # index of smaller element
+    pivot = arr[high]  # pivot
+    print('original ', arr)
+    print('pivot: {}; low: {}; high; {}'.format(pivot, low, high))
+    for j in range(low, high):
+        print('j is ', j)
+        # If current element is smaller than or
+        # equal to pivot
+        if arr[j] <= pivot:
+            # increment index of smaller element
+            i = i + 1
+            arr[i], arr[j] = arr[j], arr[i]
+            print(' - i is ', i, '; j is ', j)
+            print(' - j loop ', arr)
+
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    print('i loop ', arr)
+    return (i + 1)
+
+
+# http://quiz.geeksforgeeks.org/quick-sort/
+# The main function that implements QuickSort
+# arr[] --> Array to be sorted,
+# low  --> Starting index,
+# high  --> Ending index
+
+# Function to do Quick sort
+def quickSort(arr, low, high):
+    if low < high:
+        # pi is partitioning index, arr[p] is now
+        # at right place
+        pi = partition(arr, low, high)
+
+        # Separately sort elements before
+        # partition and after partition
+        quickSort(arr, low, pi - 1)
+        quickSort(arr, pi + 1, high)
 
 
 """
@@ -163,6 +281,18 @@ if __name__ == "__main__":
     print('\nbubble sort')
     short_bubble(l)
 
-    l = [54,26,93,17,77,31,44,55,20]
+    l = [54, 26, 93, 17, 77, 31, 44, 55, 20]
     print('\nshell sort')
     print(shellSort(l))
+
+    print('\nMerge sort')
+    alist = [54, 26, 93, 17, 77, 31, 44, 55, 20]
+    rslt = mergeSort(alist)
+    print('After Merge sort', rslt)
+
+    print('\nQuick Sort')
+    arr = [10, 7, 4, 8, 9, 1, 5]
+    # arr = [7, 6, 5, 4, 3, 2, 1]
+    n = len(arr)
+    quickSort(arr, 0, n - 1)
+    print("Sorted array is:", arr)
