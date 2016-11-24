@@ -250,6 +250,28 @@ def quickSort(arr, low, high):
         quickSort(arr, pi + 1, high)
 
 
+# quick sort: my implementation base
+# still need deepen my understanding
+def quicksort(alist):
+    if len(alist) > 1:  # note: here is if but not while
+        alist, pivot = quickhelper(alist)
+        quicksort(alist[:pivot])
+        quicksort(alist[pivot:])
+    return alist
+
+
+def quickhelper(alist):
+    print(alist)
+    pivot = len(alist) - 1
+    l = 0  # this implies the next available small value slot
+    for i in range(pivot):
+        if alist[i] <= alist[pivot]:
+            alist[i], alist[l] = alist[l], alist[i]
+            l += 1
+    alist[l], alist[pivot] = alist[pivot], alist[l]
+    return alist, l
+
+
 """
 Summary:
 
